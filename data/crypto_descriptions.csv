@@ -43,3 +43,10 @@ Polkadot,DOT-USD,"Polkadot is an open-source sharded multichain protocol that co
 Shiba Inu,SHIB-USD,"Shiba Inu (SHIBUSD) is an Ethereum-based altcoin (a cryptocurrency other than Bitcoin) that features the Shiba Inu—a Japanese breed of hunting dog—as its mascot. Shiba Inu is widely considered to be an alternative to Dogecoin; in fact, proponents of Shiba Inu tout it as ""the Dogecoin killer.""
 
 Shiba Inu and Dogecoin are meme coins, which are cryptocurrencies that are associated with some theme—like the Shiba Inu dog in the case of Shiba Inu and Dogecoin—but are often launched as a parody or inside joke rather than as a digital product that actually has some utility. While Dogecoin was launched in December 2013, Shiba Inu was created in August 2020 by an anonymous individual or group called Ryoshi."
+Wrapped Bitcoin,WBTC-USD,"Wrapped Bitcoin is a tokenized version of Bitcoin (BTC) that runs on the Ethereum (ETH) blockchain.
+
+WBTC is compliant with ERC-20 — the basic compatibility standard of the Ethereum blockchain — allowing it to be fully integrated into the latter’s ecosystem of decentralized exchanges, crypto lending services, prediction markets and other ERC-20-enabled decentralized finance (DeFi) applications.
+
+WBTC is also backed by Bitcoin at a 1:1 ratio via a network of automatically monitored merchants and custodians, ensuring that its price is pegged to Bitcoin at all times and allows users to transfer liquidity between the BTC and the ETH networks in a decentralized and autonomous manner.
+
+Wrapped Bitcoin was first announced on October 26, 2018, and officially launched on January 31, 2019."
