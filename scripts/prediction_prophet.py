@@ -41,7 +41,6 @@ crypto_option = st.sidebar.selectbox(
     "Which Crypto price do you want to predict?", list(crypto_mapping.keys()))
 
 symbol_crypto = crypto_mapping[crypto_option]
-#data_crypto = yf.Ticker(symbol_crypto)
 
 st.sidebar.title("Stock Price Prediction")
 st.sidebar.markdown("Stock price prediction taking into account all historical data:")
