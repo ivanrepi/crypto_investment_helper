@@ -1,9 +1,16 @@
 import yfinance as yf
 import pandas as pd
+import numpy as np
 from datetime import date
 from prophet import Prophet
 import json
 from prophet.serialize import model_to_json
+from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.layers import Dense, Dropout, LSTM
+from tensorflow.keras.models import Sequential
+from keras.models import load_model
+
+import joblib
 
 
 crypto_mapping = {"Bitcoin": "BTC-USD", 
@@ -46,7 +53,53 @@ def save_prophet(symbol_crypto):
     #Save the prediction
     forecast.to_csv(prediction_file_path)
 
-    return (f'{symbol_crypto} Model and Prediction save properly')
+    return (f'{symbol_crypto} Model and Prediction saved properly')
+
+
+prediction_days = 60 #Number of past days to take into account to calculate the prediction
+
+def save_neural_network(symbol_crypto):
+
+
+    df = yf.download(symbol_crypto, start='2010-01-01',
+                    end=date.today())
+    df = df.reset_index()
+    df['Date'] = pd.to_datetime(df['Date'])
+
+
+    scaler = MinMaxScaler(feature_range=(0,1))
+    scaled_data = scaler.fit_transform(df['Close'].values.reshape(-1,1))
+
+
+    x_train, y_train = [], []
+    for x in range (prediction_days, len(scaled_data)):
+        x_train.append(scaled_data[x-prediction_days:x, 0])
+        y_train.append(scaled_data[x, 0])
+
+    x_train, y_train = np.array(x_train), np.array(y_train)
+    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1],1))
+
+
+    model = Sequential()
+    model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1],1)))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50, return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50)) 
+    model.add(Dropout(0.2))
+    model.add(Dense(units=1))
+
+    model.compile(optimizer='adam', loss='mean_squared_error')
+    model.fit(x_train, y_train, epochs=25, batch_size=32)
+
+    #Save Scaler and Model
+    scaler_filename = "../data/scalers_neural_network/" + symbol_crypto + "_scaler.save"
+    model_filename = "../data/models/" + symbol_crypto + "_keras.h5"
+
+    joblib.dump(scaler, scaler_filename) 
+    model.save(model_filename)
+
+    return (f'{symbol_crypto} Model and scaler (Neural Network) saved properly')
 
 
 #Getting and applying functions to all listed cryptocurrencies               
@@ -61,3 +114,4 @@ for i in crypto_mapping:
 
     save_historical_data(symbol_crypto)
     save_prophet(symbol_crypto)
+    save_neural_network(symbol_crypto)

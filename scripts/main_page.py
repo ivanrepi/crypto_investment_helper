@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 
 import crypto_tracker as ct
+import crypto_predictor as cp
 
 
 st.set_page_config(
@@ -39,6 +40,8 @@ select = st.sidebar.selectbox("Select an Option:", options_list, key='1')
 if select =='Cryptocurrencies Analysis':
     ct.crypto_tracker()
 
+if select =='Price Prediction':
+    cp.crypto_predictor()
 
     #st.sidebar.subheader("Cryptos Comparison")
     #selection = st.sidebar.multiselect('Select two or more types:', cryptos_list)
