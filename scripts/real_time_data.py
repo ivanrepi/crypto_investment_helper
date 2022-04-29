@@ -150,16 +150,54 @@ if st.sidebar.button("Search"):
     st.plotly_chart(fig)
 
 
+    st.subheader(f"{crypto_option} News")
+
 
     url = 'https://cryptonews-api.com/api/v1?tickers='+ (re.split('-', symbol_crypto))[0] + '&items=50&page=1&token=u7pvihvex531i03ya2urh3sscf2pcj50k3uxzyu2'
     html_response = requests.get(url).content
     soup = BeautifulSoup(html_response, "html.parser") 
     site_json=json.loads(soup.text)
-    site_json['data']
+    
     news = pd.DataFrame(site_json['data'])
-
 
     negative = news['sentiment'].isin(['Negative']).sum(axis=0)
     positive = news['sentiment'].isin(['Positive']).sum(axis=0)
     neutral = news['sentiment'].isin(['Neutral']).sum(axis=0)
-    st.title(negative)
+    
+    first_kpi, second_kpi,third_kpi = st.columns(3)
+    with first_kpi:
+        st.markdown("**Positive Latest News**")
+        st.markdown(f"<h2 style='text-align: left; color: green;'>{positive}</h2>", unsafe_allow_html=True)
+    with second_kpi:
+        st.markdown("**Negative Latest News**")
+        st.markdown(f"<h2 style='text-align: left; color: red;'>{negative}</h2>", unsafe_allow_html=True)
+
+    with third_kpi:
+        st.markdown("**Neutral Latest News**")
+        st.markdown(f"<h2 style='text-align: left; color: black;'>{neutral}</h2>", unsafe_allow_html=True)
+
+    
+    with st.expander("SEE LATEST NEWS"):
+        first_news, second_news, third_news = st.columns(3)
+        i = 0
+        while i < len(news):
+            with first_news:
+                st.image(news['image_url'][i], caption= (news['source_name'][i]) + ' | ' +  (news['date'][i]) )
+                st.markdown(news['title'][i])
+                st.write('[Read the Article]' + '(' + news['news_url'][i] + ')')
+                i += 3
+        j = 1
+        while j < len(news):
+            with second_news:
+                st.image(news['image_url'][j], caption= (news['source_name'][j]) + ' | ' +  (news['date'][j]) )
+                st.markdown(news['title'][j])
+                st.write('[Read the Article]' + '(' + news['news_url'][j] + ')')
+                j+= 3
+        k = 2
+        while k < len(news):
+            with third_news:
+                st.image(news['image_url'][k], caption= (news['source_name'][k]) + ' | ' +  (news['date'][k]) )
+                st.markdown(news['title'][k])
+                st.write('[Read the Article]' + '(' + news['news_url'][k] + ')')
+                k += 3
+
