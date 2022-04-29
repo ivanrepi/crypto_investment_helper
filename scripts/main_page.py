@@ -8,6 +8,10 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 
+import crypto_tracker as ct
+import crypto_predictor as cp
+import buy_sell_helper as bsh
+
 
 st.set_page_config(
     page_title="CryptoAnalysis",
@@ -34,4 +38,12 @@ select = st.sidebar.selectbox("Select an Option:", options_list, key='1')
 
 
 
+if select =='Cryptocurrencies Analysis':
+    ct.crypto_tracker()
+
+if select =='Price Prediction':
+    cp.crypto_predictor()
+
+if select == 'Buy & Sell':
+    bsh.buy_sell_helper()
 
