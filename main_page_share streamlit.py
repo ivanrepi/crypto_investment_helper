@@ -1,10 +1,4 @@
-
 import streamlit as st
-
-
-from scripts import crypto_tracker as ct
-from scripts import crypto_predictor as cp
-from scripts import buy_sell_helper as bsh
 
 
 st.set_page_config(
@@ -32,12 +26,4 @@ select = st.sidebar.selectbox("Select an Option:", options_list, key='1')
 
 
 
-if select =='Cryptocurrencies Analysis':
-    ct.crypto_tracker()
-
-if select =='Price Prediction':
-    cp.crypto_predictor()
-
-if select == 'Buy & Sell':
-    bsh.buy_sell_helper()
 

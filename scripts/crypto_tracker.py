@@ -7,6 +7,14 @@ from dateutil.relativedelta import relativedelta
 import plotly.express as px
 import plotly.graph_objects as go
 
+#Import local path file 
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+import sys
+sys.path.insert(0,os.getenv('path'))
+
 
 def crypto_tracker():
 
@@ -26,7 +34,7 @@ def crypto_tracker():
                     "Shiba Inu": "SHIB-USD",
                     "Wrapped Bitcoin": "WBTC-USD"}
 
-    crypto_descriptions = pd.read_csv('../data/crypto_descriptions.csv')
+    crypto_descriptions = pd.read_csv('data/crypto_descriptions.csv')
 
 
     crypto_option = st.sidebar.selectbox(
