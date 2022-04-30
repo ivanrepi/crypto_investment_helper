@@ -50,7 +50,6 @@ frozenlist
 gast
 gitdb
 GitPython
-google-auth6
 google-auth-oauthlib
 google-pasta
 greenlet
