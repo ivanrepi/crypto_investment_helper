@@ -2,9 +2,9 @@
 import streamlit as st
 
 
-from scripts import crypto_tracker as ct
-from scripts import crypto_predictor as cp
-from scripts import buy_sell_helper as bsh
+import crypto_tracker as ct
+import crypto_predictor as cp
+import buy_sell_helper as bsh
 
 
 st.set_page_config(
