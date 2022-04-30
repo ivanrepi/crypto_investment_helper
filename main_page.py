@@ -1,6 +1,13 @@
 
 import streamlit as st
 
+#Import local path file 
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+import sys
+sys.path.insert(0,os.getenv('path'))
 
 import crypto_tracker as ct
 import crypto_predictor as cp
