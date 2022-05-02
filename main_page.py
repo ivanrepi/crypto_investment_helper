@@ -9,9 +9,9 @@ load_dotenv()
 import sys
 sys.path.insert(0,os.getenv('path'))
 
-import crypto_tracker as ct
-import crypto_predictor as cp
-import buy_sell_helper as bsh
+import main_crypto_tracker as ct
+import main_crypto_predictor as cp
+import main_buy_sell_helper as bsh
 
 
 st.set_page_config(

@@ -55,8 +55,8 @@ def crypto_predictor():
 
             #Short Term Prediction (Neural Network Prediction)
             prediction_days = 60
-            scaler_filename = "../data/scalers_neural_network/" + symbol_crypto + "_scaler.save"
-            model_filename = "../data/models/" + symbol_crypto + "_keras.h5"
+            scaler_filename = "./data/scalers_neural_network/" + symbol_crypto + "_scaler.save"
+            model_filename = "./data/models/" + symbol_crypto + "_keras.h5"
 
             scaler = joblib.load(scaler_filename) 
             model = load_model(model_filename)
@@ -128,8 +128,8 @@ def crypto_predictor():
 
             #Long Term Prediction (FBProphet Prediction)
             st.subheader('Long Term Prediction (FBProphet Prediction)')
-            prediction_file_path = '../data/predictions/forecast_'+ symbol_crypto + '.csv'
-            model_file_path = '../data/models/serialized_model_'+ symbol_crypto + '.json'
+            prediction_file_path = 'data/predictions/forecast_'+ symbol_crypto + '.csv'
+            model_file_path = 'data/models/serialized_model_'+ symbol_crypto + '.json'
 
             with open(model_file_path, 'r') as fin:
                 model = model_from_json(json.load(fin))  # Load model

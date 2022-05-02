@@ -188,7 +188,6 @@ def buy_sell_helper():
         st.subheader("Last 30 days Sentiment Analysis")
 
         url2 = 'https://cryptonews-api.com/api/v1/stat?&tickers='+ symbol_initials + '&date=last30days&page=1&token=u7pvihvex531i03ya2urh3sscf2pcj50k3uxzyu2'
-        #url2 = 'https://cryptonews-api.com/api/v1/stat?&tickers=BTC&date=last30days&page=1&token=u7pvihvex531i03ya2urh3sscf2pcj50k3uxzyu2'
         html_response2 = requests.get(url2).content
         soup2 = BeautifulSoup(html_response2, "html.parser") 
         site_json2=json.loads(soup2.text)
