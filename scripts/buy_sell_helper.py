@@ -10,40 +10,13 @@ import yfinance as yf
 from datetime import date
 import plotly.graph_objs as go 
 
-import matplotlib.pyplot as plt
-import plotly.offline as pyo
 
 import requests
 from bs4 import BeautifulSoup
 import json
 import re
 
-def buy_sell_helper():
-
-    crypto_mapping = {"Bitcoin": "BTC-USD", 
-                    "Ethereum": "ETH-USD", 
-                    "Tether": "USDT-USD", 
-                    "BNB": "BNB-USD", 
-                    "USD Coin": "USDC-USD", 
-                    "Solana": "SOL-USD", 
-                    "XRP": "XRP-USD", 
-                    "Terra": "LUNA-USD", 
-                    "Cardano": "ADA-USD", 
-                    "Avalanche": "AVAX-USD", 
-                    "Dogecoin": "DOGE-USD", 
-                    "TerraUSD": "UST-USD", 
-                    "Binance USD": "BUSD-USD", 
-                    "Shiba Inu": "SHIB-USD",
-                    "Wrapped Bitcoin": "WBTC-USD"}
-
-
-
-    crypto_option = st.sidebar.selectbox(
-        "Which Crypto do you want to visualize?", list(crypto_mapping.keys()))
-
-
-    symbol_crypto = crypto_mapping[crypto_option]
-    data_crypto = yf.Ticker(symbol_crypto)
+def buy_sell_helper(symbol_crypto,crypto_option):
 
 
     if st.sidebar.button("Search"):
@@ -95,6 +68,7 @@ def buy_sell_helper():
         data['SMA 100'] = data['Close'].rolling(window=100).mean()
 
         df.rolling(window=30).mean()
+        
         #SMA BUY SELL
         #Function for buy and sell signal
         def buy_sell(data):
@@ -179,7 +153,6 @@ def buy_sell_helper():
         st.subheader("Last 30 days Sentiment Analysis")
 
         url2 = 'https://cryptonews-api.com/api/v1/stat?&tickers='+ symbol_initials + '&date=last30days&page=1&token=u7pvihvex531i03ya2urh3sscf2pcj50k3uxzyu2'
-        #url2 = 'https://cryptonews-api.com/api/v1/stat?&tickers=BTC&date=last30days&page=1&token=u7pvihvex531i03ya2urh3sscf2pcj50k3uxzyu2'
         html_response2 = requests.get(url2).content
         soup2 = BeautifulSoup(html_response2, "html.parser") 
         site_json2=json.loads(soup2.text)
@@ -201,7 +174,6 @@ def buy_sell_helper():
         sent_df = pd.DataFrame(list(zip(list(sentiments.index),neutral, positive, negative)),
                     columns =['Date','Neutral', 'Positive', 'Negative'])
         sent_df['Date'] = pd.to_datetime(sent_df['Date'])
-        #sent_df.plot(x="Date", y=["Neutral", "Positive", "Negative"], kind="line", figsize=(9, 8));
 
 
         # Create figure

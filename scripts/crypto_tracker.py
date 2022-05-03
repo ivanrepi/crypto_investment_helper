@@ -15,37 +15,17 @@ import sys
 sys.path.insert(0,os.getenv('path'))
 
 
-
-def crypto_tracker():
-
-    crypto_mapping = {"Bitcoin": "BTC-USD", 
-                    "Ethereum": "ETH-USD", 
-                    "Tether": "USDT-USD", 
-                    "BNB": "BNB-USD", 
-                    "USD Coin": "USDC-USD", 
-                    "Solana": "SOL-USD", 
-                    "XRP": "XRP-USD", 
-                    "Terra": "LUNA-USD", 
-                    "Cardano": "ADA-USD", 
-                    "Avalanche": "AVAX-USD", 
-                    "Dogecoin": "DOGE-USD", 
-                    "TerraUSD": "UST-USD", 
-                    "Binance USD": "BUSD-USD", 
-                    "Shiba Inu": "SHIB-USD",
-                    "Wrapped Bitcoin": "WBTC-USD"}
+def crypto_tracker(symbol_crypto,crypto_option):
 
     crypto_descriptions = pd.read_csv('../data/crypto_descriptions.csv')
 
-
-    crypto_option = st.sidebar.selectbox(
-        "Which Crypto do you want to visualize?", list(crypto_mapping.keys()))
 
     start_date = st.sidebar.date_input("From", date.today() - relativedelta(months=1))
     end_date = st.sidebar.date_input("To", date.today())
     if start_date > end_date:
         st.warning("You seem to have selected a start date greater than end date. Please reselect the dates")
 
-    symbol_crypto = crypto_mapping[crypto_option]
+    #symbol_crypto = crypto_mapping[crypto_option]
     data_crypto = yf.Ticker(symbol_crypto)
 
     value_selector = st.sidebar.selectbox(
@@ -57,8 +37,10 @@ def crypto_tracker():
         st.title(f"{crypto_option} Tracker")
 
         crypto_hist = data_crypto.history(
-            start=start_date, end=end_date, interval='1d'
-        )
+            start=start_date, end=end_date, interval='1d')
+
+        crypto_hist.index =crypto_hist.index.map(lambda t: t.strftime('%Y-%m-%d'))
+
         st.subheader("Price Evolution")
 
         #Calculating max and min closing price (and its date)

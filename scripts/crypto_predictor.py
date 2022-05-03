@@ -2,13 +2,10 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 from datetime import date
-import matplotlib.pyplot as plt
 from prophet import Prophet
 from prophet.plot import plot_plotly
-import plotly.offline as py
 import streamlit as st 
 
-from datetime import datetime
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
@@ -19,31 +16,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 import json
-from prophet.serialize import model_to_json, model_from_json
+from prophet.serialize import model_from_json
 
-def crypto_predictor():
-
-    crypto_mapping = {"Bitcoin": "BTC-USD", 
-                    "Ethereum": "ETH-USD", 
-                    "Tether": "USDT-USD", 
-                    "BNB": "BNB-USD", 
-                    "USD Coin": "USDC-USD", 
-                    "Solana": "SOL-USD", 
-                    "XRP": "XRP-USD", 
-                    "Terra": "LUNA-USD", 
-                    "Cardano": "ADA-USD", 
-                    "Avalanche": "AVAX-USD", 
-                    "Dogecoin": "DOGE-USD", 
-                    "TerraUSD": "UST-USD", 
-                    "Binance USD": "BUSD-USD", 
-                    "Shiba Inu": "SHIB-USD",
-                    "Wrapped Bitcoin": "WBTC-USD"}
-
-
-    crypto_option = st.sidebar.selectbox(
-        "Which Crypto price do you want to predict?", list(crypto_mapping.keys()))
-
-    symbol_crypto = crypto_mapping[crypto_option]
+def crypto_predictor(symbol_crypto,crypto_option):
 
     st.sidebar.title("Stock Price Prediction")
     st.sidebar.markdown("Stock price prediction taking into account all historical data:")
