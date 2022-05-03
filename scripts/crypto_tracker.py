@@ -25,27 +25,25 @@ def crypto_tracker(symbol_crypto,crypto_option):
     if start_date > end_date:
         st.warning("You seem to have selected a start date greater than end date. Please reselect the dates")
 
-    #symbol_crypto = crypto_mapping[crypto_option]
-    data_crypto = yf.Ticker(symbol_crypto)
-
     value_selector = st.sidebar.selectbox(
-        "Value Selector", ("Close", "Open", "High", "Low", "Volume")
-    )
+        "Value Selector", ("Close", "Open", "High", "Low", "Volume"))
 
 
     if st.sidebar.button("Search"):
         st.title(f"{crypto_option} Tracker")
 
-        crypto_hist = data_crypto.history(
-            start=start_date, end=end_date, interval='1d')
-
+        data_crypto = yf.Ticker(symbol_crypto)
+        crypto_hist = data_crypto.history(start=start_date, end=end_date, interval='1d')
         crypto_hist.index =crypto_hist.index.map(lambda t: t.strftime('%Y-%m-%d'))
 
+        #If there is no connection to Internet, then read historical cryptocurrency csv file
+        if crypto_hist.empty == True:
+            crypto_hist = pd.read_csv('../data/historical_yfinance/'+symbol_crypto+'.csv',index_col='Date')
+            
+        
         st.subheader("Price Evolution")
 
         #Calculating max and min closing price (and its date)
-
-
         max_closing_price = crypto_hist[value_selector].max()
         max_date = crypto_hist[crypto_hist[value_selector] == max_closing_price].index[0]
         min_closing_price = crypto_hist[value_selector].min()
