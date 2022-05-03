@@ -16,8 +16,7 @@ import buy_sell_helper as bsh
 st.set_page_config(
     page_title="CryptoAnalysis",
     page_icon="🧊",
-    #layout="wide",
-    #initial_sidebar_state="auto",
+
     menu_items={
         "Get Help": "https://github.com/ivanrepi",
         "Report a bug": "https://github.com/ivanrepi",
@@ -26,8 +25,6 @@ st.set_page_config(
 )
 
 st.title("Cryptocurrencies Investment Helper")
-#st.subheader("Ivan Repilado - Ironhack")
-#st.markdown("This application takes into account the Top Cryptocurrencies in the market")
 
 
 options_list = ['Cryptocurrencies Analysis', 'Price Prediction', 'Buy & Sell']

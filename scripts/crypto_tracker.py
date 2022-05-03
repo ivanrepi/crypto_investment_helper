@@ -1,7 +1,6 @@
 import yfinance as yf
 import streamlit as st
 import pandas as pd
-from datetime import datetime
 from datetime import date
 from dateutil.relativedelta import relativedelta
 import plotly.express as px
@@ -14,6 +13,7 @@ load_dotenv()
 
 import sys
 sys.path.insert(0,os.getenv('path'))
+
 
 
 def crypto_tracker():
@@ -34,7 +34,7 @@ def crypto_tracker():
                     "Shiba Inu": "SHIB-USD",
                     "Wrapped Bitcoin": "WBTC-USD"}
 
-    crypto_descriptions = pd.read_csv('data/crypto_descriptions.csv')
+    crypto_descriptions = pd.read_csv('../data/crypto_descriptions.csv')
 
 
     crypto_option = st.sidebar.selectbox(
@@ -59,16 +59,25 @@ def crypto_tracker():
         crypto_hist = data_crypto.history(
             start=start_date, end=end_date, interval='1d'
         )
-
         st.subheader("Price Evolution")
+
         #Calculating max and min closing price (and its date)
+
+
         max_closing_price = crypto_hist[value_selector].max()
         max_date = crypto_hist[crypto_hist[value_selector] == max_closing_price].index[0]
-        st.markdown(f"Highest {value_selector} Price for {crypto_option}: __{round(max_closing_price,4)}__ USD observed on: __{max_date}__")
-
         min_closing_price = crypto_hist[value_selector].min()
         min_date = crypto_hist[crypto_hist[value_selector] == min_closing_price].index[0]
-        st.markdown(f"Lowest {value_selector} Price for {crypto_option}: __{round(min_closing_price,4)}__ USD observed on: __{min_date}__")
+
+        first_kpi, second_kpi = st.columns(2)
+        with first_kpi:
+            st.markdown(f"**Highest {value_selector} Price for {crypto_option}:**")
+            st.markdown(f"<h2 style='text-align: left; color: green;'>{round(max_closing_price,4)} USD</h2>", unsafe_allow_html=True)
+            st.markdown(f"Observed on {max_date}")
+        with second_kpi:
+            st.markdown(f"**Lowest {value_selector} Price for {crypto_option}:**")
+            st.markdown(f"<h2 style='text-align: left; color: red;'>{round(min_closing_price,4)} USD</h2>", unsafe_allow_html=True)
+            st.markdown(f"Observed on {min_date}")
 
         #Ploting the timeline evolution of the value selector price
         fig = px.line(crypto_hist, 
@@ -81,16 +90,24 @@ def crypto_tracker():
         #Calculating max and min differences between Closing and Opening prices
         crypto_hist['Difference'] = crypto_hist.Close - crypto_hist.Open
         max_dif_price = crypto_hist['Difference'].max()
-        max_dif_date = crypto_hist[crypto_hist['Difference'] == max_dif_price].index[0]
-        st.markdown(f"Highest Difference Prices (Closing - Opening) for {crypto_option}: __{round(max_dif_price,4)}__ USD observed on: __{max_dif_date}__")
-        
+        max_dif_date = crypto_hist[crypto_hist['Difference'] == max_dif_price].index[0]        
         min_dif_price = crypto_hist['Difference'].min()
         min_dif_date = crypto_hist[crypto_hist['Difference'] == min_dif_price].index[0]
-        st.markdown(f"Lowest Difference Prices (Closing - Opening) for {crypto_option}: __{round(min_dif_price,4)}__ USD observed on: __{min_dif_date}__")
 
+
+        first_kpi_candlestick, second_kpi_first_kpi_candlestick = st.columns(2)
+        with first_kpi_candlestick:
+            st.markdown(f"**Highest Difference Prices (Closing - Opening) for {crypto_option}:**")
+            st.markdown(f"<h2 style='text-align: left; color: green;'>{round(max_dif_price,4)} USD</h2>", unsafe_allow_html=True)
+            st.markdown(f"Observed on {max_dif_date}")
+        with second_kpi_first_kpi_candlestick:
+            st.markdown(f"**Lowest Difference Prices (Closing - Opening) for {crypto_option}:**")
+            st.markdown(f"<h2 style='text-align: left; color: red;'>{round(min_dif_price,4)} USD</h2>", unsafe_allow_html=True)
+            st.markdown(f"Observed on {min_dif_date}")
 
         set = { 'x': crypto_hist.index, 'open': crypto_hist.Open, 'close': crypto_hist.Close, 'high': crypto_hist.High, 'low': crypto_hist.Low, 'type': 'candlestick',}
         fig = go.Figure(data=set)
+        labels={"x": "Date"}
         st.plotly_chart(fig)
 
 
@@ -98,12 +115,19 @@ def crypto_tracker():
         st.subheader("Daily Change (%)")
         crypto_hist["Daily Change"] = crypto_hist["Close"].pct_change() * 100
         max_daily_change = crypto_hist["Daily Change"].max()
-        max_change_date = crypto_hist[crypto_hist["Daily Change"] == max_daily_change].index[0]
-        st.markdown(f"Highest Daily Change for {crypto_option}: __{round(max_daily_change,2)}__ % observed on: __{max_change_date}__")
-        
+        max_change_date = crypto_hist[crypto_hist["Daily Change"] == max_daily_change].index[0]        
         min_daily_change = crypto_hist["Daily Change"].min()
         min_change_date = crypto_hist[crypto_hist["Daily Change"] == min_daily_change].index[0]
-        st.markdown(f"Lowest Daily Change for {crypto_option}: __{round(min_daily_change,2)}__ % observed on: __{min_change_date}__")
+
+        first_kpi_change, second_kpi_first_kpi_change = st.columns(2)
+        with first_kpi_change:
+            st.markdown(f"**Highest Daily Change for {crypto_option}:**")
+            st.markdown(f"<h2 style='text-align: left; color: green;'>{round(max_daily_change,2)} %</h2>", unsafe_allow_html=True)
+            st.markdown(f"Observed on {max_change_date}")
+        with second_kpi_first_kpi_change:
+            st.markdown(f"**Lowest Daily Change for {crypto_option}:**")
+            st.markdown(f"<h2 style='text-align: left; color: red;'>{round(min_daily_change,2)} USD</h2>", unsafe_allow_html=True)
+            st.markdown(f"Observed on {min_change_date}")
 
         fig = px.line(crypto_hist, 
         x=crypto_hist.index, y="Daily Change",
