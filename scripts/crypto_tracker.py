@@ -87,10 +87,13 @@ def crypto_tracker(symbol_crypto,crypto_option):
             st.markdown(f"<h2 style='text-align: left; color: red;'>{round(min_dif_price,4)} USD</h2>", unsafe_allow_html=True)
             st.markdown(f"Observed on {min_dif_date}")
 
-        set = { 'x': crypto_hist.index, 'open': crypto_hist.Open, 'close': crypto_hist.Close, 'high': crypto_hist.High, 'low': crypto_hist.Low, 'type': 'candlestick',}
-        fig = go.Figure(data=set)
-        labels={"x": "Date"}
+        set = { 'x': crypto_hist.index, 'open': crypto_hist.Open, 'close': crypto_hist.Close, 'high': crypto_hist.High, 'low': crypto_hist.Low,'type': 'candlestick',}
+
+        layout = go.Layout(xaxis=dict(title="Date"),yaxis=dict(title="USD") ) 
+        fig=go.Figure(layout=layout,data=set)         
         st.plotly_chart(fig)
+
+   
 
 
         #Calculating and ploting Daili Cahnge (% comparing previous day)

@@ -93,10 +93,9 @@ def crypto_predictor(symbol_crypto,crypto_option):
             fig.update_layout(title_text="Bitcoin price prediction")
 
             data = [actual_prices_plot,prediction_prices_plot]
-            fig = dict(data=data)
+            layout = go.Layout(xaxis=dict(title="Date"),yaxis=dict(title="USD") )
+            fig = dict(layout=layout,data=data)
             st.write(fig)
-
-
 
 
 

@@ -52,7 +52,6 @@ def buy_sell_helper(symbol_crypto,crypto_option):
             )
         )
 
-        #fig.show()
         st.plotly_chart(fig)
 
 
@@ -118,7 +117,9 @@ def buy_sell_helper(symbol_crypto,crypto_option):
         fig.update_layout(title= str(symbol_crypto+ " Price History with buy and sell signals"),yaxis_title='Close Price INR (₨)')    
 
         data = [actual_prices_plot,sma20_plot,sma100_plot,Buy_Signal_plot,Sell_Signal_plot]
-        fig = dict(data=data)
+        layout = go.Layout(xaxis=dict(title="Date"),yaxis=dict(title="USD") )
+        fig = dict(layout=layout,data=data)
+
         st.plotly_chart(fig)
 
 
@@ -126,7 +127,7 @@ def buy_sell_helper(symbol_crypto,crypto_option):
 
         symbol_initials = (re.split('-', symbol_crypto))[0] 
 
-        url = 'https://cryptonews-api.com/api/v1?tickers='+ symbol_initials + '&items=50&page=1&token=u7pvihvex531i03ya2urh3sscf2pcj50k3uxzyu2'
+        url = 'https://cryptonews-api.com/api/v1?tickers='+ symbol_initials + '&items=50&page=1&token=vkacbvdepnr96rbqmd8e9o95nzl2edjwvbcve3kg'
         html_response = requests.get(url).content
         soup = BeautifulSoup(html_response, "html.parser") 
         site_json=json.loads(soup.text)
@@ -152,7 +153,7 @@ def buy_sell_helper(symbol_crypto,crypto_option):
         
         st.subheader("Last 30 days Sentiment Analysis")
 
-        url2 = 'https://cryptonews-api.com/api/v1/stat?&tickers='+ symbol_initials + '&date=last30days&page=1&token=u7pvihvex531i03ya2urh3sscf2pcj50k3uxzyu2'
+        url2 = 'https://cryptonews-api.com/api/v1/stat?&tickers='+ symbol_initials + '&date=last30days&page=1&token=vkacbvdepnr96rbqmd8e9o95nzl2edjwvbcve3kg'
         html_response2 = requests.get(url2).content
         soup2 = BeautifulSoup(html_response2, "html.parser") 
         site_json2=json.loads(soup2.text)
@@ -184,14 +185,11 @@ def buy_sell_helper(symbol_crypto,crypto_option):
         negative_articles_plot = go.Scatter(name='Negative Articles',x=sent_df.Date, y=sent_df.Negative)
 
         # Set title
-        fig.update_layout(title_text="Articles Sentimen Evolution")
 
         data = [neutral_articles_plot,negative_articles_plot,positive_articles_plot]
-        fig = dict(data=data)
+        layout = go.Layout(title ="Articles Sentiment Evolution", xaxis=dict(title="Date"),yaxis=dict(title="Number of News") )
+        fig = dict(layout=layout,data=data)
         st.write(fig)
-
-
-
 
         with st.expander("SEE LATEST NEWS"):
             first_news, second_news, third_news = st.columns(3)
