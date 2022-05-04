@@ -10,13 +10,13 @@ from scripts import buy_sell_helper as bsh
 
 
 def main():
-    def set_bg_hack_url():
-            
+    #FUnction to set the background image (url pasted inside)
+    def set_bg_hack_url():  
         st.markdown(
             f"""
             <style>
             .stApp {{
-                background: url("https://wallpaperaccess.com/full/1205123.jpg");
+                background: url("https://wallpaperaccess.com/full/1205123.jpg"); 
                 background-size: cover
             }}
             </style>
@@ -24,6 +24,7 @@ def main():
             unsafe_allow_html=True
         )
 
+    #Set the main parameters of the page
     st.set_page_config(
         page_title="CryptoAnalysis",
         page_icon="🧊",
@@ -36,8 +37,10 @@ def main():
     )
     set_bg_hack_url()
 
+    #Main page title
     st.title("Cryptocurrencies Investment Helper")
     
+    #Options of cryptocurrencies to be chosen by the user
     crypto_mapping = {"Bitcoin": "BTC-USD", 
                     "Ethereum": "ETH-USD", 
                     "Tether": "USDT-USD", 
@@ -54,7 +57,7 @@ def main():
                     "Shiba Inu": "SHIB-USD",
                     "Wrapped Bitcoin": "WBTC-USD"}
 
-
+    #3 app modules:
     options_list = ['Cryptocurrencies Analysis', 'Price Prediction', 'Buy & Sell']
 
     st.sidebar.title("Market Helper")
@@ -66,6 +69,7 @@ def main():
     symbol_crypto = crypto_mapping[crypto_option]
 
 
+    #Call the script depending of app module chosen:
     if select =='Cryptocurrencies Analysis':
         ct.crypto_tracker(symbol_crypto,crypto_option)
 

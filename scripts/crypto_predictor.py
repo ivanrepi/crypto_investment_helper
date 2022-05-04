@@ -29,6 +29,8 @@ def crypto_predictor(symbol_crypto,crypto_option):
 
     try:
         request = requests.get(url, timeout=timeout)
+
+        ########### Short Term Stock Price Prediction #############
         st.sidebar.title("Stock Price Prediction")
         st.sidebar.markdown("Stock price prediction taking into account all historical data:")
 
@@ -38,21 +40,21 @@ def crypto_predictor(symbol_crypto,crypto_option):
             with st.spinner('Looking to the future...'):
 
                 #Short Term Prediction (Neural Network Prediction)
-                prediction_days = 60
-                scaler_filename = "data/scalers_neural_network/" + symbol_crypto + "_scaler.save"
-                model_filename = "data/models/" + symbol_crypto + "_keras.h5"
+                prediction_days = 60 #Take into account these days for the calculation
+                scaler_filename = "data/scalers_neural_network/" + symbol_crypto + "_scaler.save" #Load trainned scaler
+                model_filename = "data/models/" + symbol_crypto + "_keras.h5" #Load trainned model
 
                 scaler = joblib.load(scaler_filename) 
                 model = load_model(model_filename)
 
 
                 df = yf.download(symbol_crypto, start='2010-01-01',
-                            end=date.today())
+                            end=date.today()) #This is the trainning dataframe
                 df = df.reset_index()
                 df['Date'] = pd.to_datetime(df['Date'])
 
                 test_data = yf.download('BTC-USD', start=date.today() - relativedelta(months=14),
-                                end=date.today())
+                                end=date.today()) #This is the test dataframe (what user see in the chart)
                 test_data = test_data.reset_index()
                 actual_prices = test_data['Close'].values
 
@@ -73,12 +75,12 @@ def crypto_predictor(symbol_crypto,crypto_option):
                 prediction_prices = scaler.inverse_transform(prediction_prices)
 
 
-                #Creating results dataframe
+                #Creating the results dataframe
                 df1 = pd.DataFrame(test_data.Date)
                 df1['prediction_prices'] = prediction_prices
                 df1['actual_prices'] = actual_prices
 
-                #Predict Next Day
+                #Predict Next Day Close Price
                 real_data = [model_inputs[len(model_inputs) - prediction_days:len(model_inputs) +1 , 0]]
                 real_data = np.array(real_data)
                 real_data = np.reshape(real_data, (real_data.shape[0], real_data.shape[1], 1))
@@ -86,6 +88,7 @@ def crypto_predictor(symbol_crypto,crypto_option):
                 prediction = scaler.inverse_transform(prediction)
 
                 st.subheader('Short Term Prediction (Neural Network Prediction)')
+
                 #Showing tomorrow's price prediction as a KPI:
                 first_kpi, second_kpi = st.columns(2)
                 with first_kpi:
@@ -94,20 +97,18 @@ def crypto_predictor(symbol_crypto,crypto_option):
 
                 # Create figure
                 fig = go.Figure()
-
                 actual_prices_plot = go.Scatter(name='Actual prices',x=df1.Date, y=df1.actual_prices)
                 prediction_prices_plot = go.Scatter(name='Predicted prices',x=df1.Date, y=df1.prediction_prices)
 
                 # Set title
                 fig.update_layout(title_text="Bitcoin price prediction")
-
                 data = [actual_prices_plot,prediction_prices_plot]
                 layout = go.Layout(xaxis=dict(title="Date"),yaxis=dict(title="USD") )
                 fig = dict(layout=layout,data=data)
                 st.write(fig)
 
 
-
+                ########### Long Term Stock Price Prediction #############
 
                 #Long Term Prediction (FBProphet Prediction)
                 st.subheader('Long Term Prediction (FBProphet Prediction)')
@@ -117,6 +118,7 @@ def crypto_predictor(symbol_crypto,crypto_option):
                 with open(model_file_path, 'r') as fin:
                     model = model_from_json(json.load(fin))  # Load model
 
+                #As this calculation takes a while, we load directly the prediction (calculated by admin user)
                 forecast = pd.read_csv(prediction_file_path)
                 forecast['ds'] = pd.to_datetime(forecast['ds'])
 
@@ -127,15 +129,18 @@ def crypto_predictor(symbol_crypto,crypto_option):
                 st.write(fig2)
 
 
+        ########### Creating the Stock Price Prediction #############
         st.sidebar.title("Make your prediction")
         st.sidebar.markdown("Select the the  historical data dates for the prediction, as well as the desired number of predicted days:")
 
+        #Selecting date range to take into account for the trainning
         start_date = st.sidebar.date_input("Take data from:", date.today() - relativedelta(months=1))
         end_date = st.sidebar.date_input("Take data to:", date.today())
             
         if start_date > end_date:
             st.warning("You seem to have selected a start date greater than end date. Please reselect the dates")
 
+        #Number of days to predict
         prediction_days = st.sidebar.number_input(
             "Number of predicted days",
             min_value=1,

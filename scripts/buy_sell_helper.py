@@ -10,7 +10,7 @@ import yfinance as yf
 from datetime import date
 import plotly.graph_objs as go 
 
-
+#Web Scraping
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -18,14 +18,17 @@ import re
 
 def buy_sell_helper(symbol_crypto,crypto_option):
     
+    #This is to be sure we'll have internet connection before starting the script
     url = "https://finance.yahoo.com/"
     timeout = 5
     try:
         request = requests.get(url, timeout=timeout)
-
+        #If requests is ok, then the next code will work
 
         if st.sidebar.button("Search"):
             st.title(f"{crypto_option} Buy & Sell Helper")
+
+            ########### Today's Prices Evolution Implementation #############
 
             # Retrieve stock data frame (df) from yfinance API at an interval of 1m 
             df = yf.download(tickers=symbol_crypto,period='1d',interval='1m')
@@ -34,12 +37,10 @@ def buy_sell_helper(symbol_crypto,crypto_option):
 
             st.subheader(f"Today's {crypto_option} Evolution")
 
-            # Declare plotly figure (go)
+            # Declare plotly figure (go) with only closing prices
             fig=go.Figure()
-
             fig.add_trace(go.Scatter(x=df.index,
                             y=df['Close'], name = 'market data'))
-
             fig.update_layout(
                 title= str(symbol_crypto)+' Live Share Price:',
                 yaxis_title='Closing Price (USD per Shares)')               
@@ -61,20 +62,22 @@ def buy_sell_helper(symbol_crypto,crypto_option):
 
 
 
+            ########### Simple Moving Average Implementation #############
+
             data = yf.download(symbol_crypto, start='2010-01-01',
                         end=date.today())
             data = data.reset_index()
             data['Date'] = pd.to_datetime(data['Date'])
 
-            ########### Simple Moving Average Implementation #############
+           
 
-            data['SMA 20'] = data['Close'].rolling(window=20).mean()
-            data['SMA 100'] = data['Close'].rolling(window=100).mean()
+            data['SMA 20'] = data['Close'].rolling(window=20).mean() #Calculating the latest 20 days mean
+            data['SMA 100'] = data['Close'].rolling(window=100).mean() #Calculating the latest 100 days mean
 
             df.rolling(window=30).mean()
             
             #SMA BUY SELL
-            #Function for buy and sell signal
+            #Function for buy and sell signals
             def buy_sell(data):
                 signalBuy = []
                 signalSell = []
@@ -127,10 +130,11 @@ def buy_sell_helper(symbol_crypto,crypto_option):
 
             st.plotly_chart(fig)
 
+            ########### Crypto News Implementation #############
             try:
                 st.subheader(f"{crypto_option} News")
 
-                symbol_initials = (re.split('-', symbol_crypto))[0] 
+                symbol_initials = (re.split('-', symbol_crypto))[0]  #Take only the initials from the cryptocoin
 
                 url = 'https://cryptonews-api.com/api/v1?tickers='+ symbol_initials + '&items=50&page=1&token=vkacbvdepnr96rbqmd8e9o95nzl2edjwvbcve3kg'
                 html_response = requests.get(url).content
@@ -139,10 +143,13 @@ def buy_sell_helper(symbol_crypto,crypto_option):
                 
                 news = pd.DataFrame(site_json['data'])
 
+                #Filtering the news by the sentiment
+
                 negative = news['sentiment'].isin(['Negative']).sum(axis=0)
                 positive = news['sentiment'].isin(['Positive']).sum(axis=0)
                 neutral = news['sentiment'].isin(['Neutral']).sum(axis=0)
-                
+
+                #Showing the sentiments KPIs
                 first_kpi, second_kpi,third_kpi = st.columns(3)
                 with first_kpi:
                     st.markdown("**Positive Latest News**")
@@ -156,6 +163,7 @@ def buy_sell_helper(symbol_crypto,crypto_option):
                     st.markdown(f"<h2 style='text-align: left; color: black;'>{neutral}</h2>", unsafe_allow_html=True)
 
                 
+                #Last 30 days Sentiment Analysis Chart
                 st.subheader("Last 30 days Sentiment Analysis")
 
                 url2 = 'https://cryptonews-api.com/api/v1/stat?&tickers='+ symbol_initials + '&date=last30days&page=1&token=vkacbvdepnr96rbqmd8e9o95nzl2edjwvbcve3kg'
@@ -190,12 +198,12 @@ def buy_sell_helper(symbol_crypto,crypto_option):
                 negative_articles_plot = go.Scatter(name='Negative Articles',x=sent_df.Date, y=sent_df.Negative)
 
                 # Set title
-
                 data = [neutral_articles_plot,negative_articles_plot,positive_articles_plot]
                 layout = go.Layout(title ="Articles Sentiment Evolution", xaxis=dict(title="Date"),yaxis=dict(title="Number of News") )
                 fig = dict(layout=layout,data=data)
                 st.write(fig)
 
+                #Showing the latest 50 news
                 with st.expander("SEE LATEST NEWS"):
                     first_news, second_news, third_news = st.columns(3)
                     i = 0
@@ -221,6 +229,8 @@ def buy_sell_helper(symbol_crypto,crypto_option):
                             k += 3
             except:
                 pass
+            
+    #If no internet connection:
     except (requests.ConnectionError, requests.Timeout) as exception:
         st.title("Internet Connection Error.")
         st.markdown("Internet is needed to see Today's Prices evolution.")

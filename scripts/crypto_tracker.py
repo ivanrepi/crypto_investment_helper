@@ -17,14 +17,14 @@ sys.path.insert(0,os.getenv('path'))
 
 def crypto_tracker(symbol_crypto,crypto_option):
 
+    #Calling the crypto_descriptions csv file
     crypto_descriptions = pd.read_csv('data/crypto_descriptions.csv')
 
-
+    #Selecting the range dates and the value selector for the user query:
     start_date = st.sidebar.date_input("From", date.today() - relativedelta(months=1))
     end_date = st.sidebar.date_input("To", date.today())
     if start_date > end_date:
         st.warning("You seem to have selected a start date greater than end date. Please reselect the dates")
-
     value_selector = st.sidebar.selectbox(
         "Value Selector", ("Close", "Open", "High", "Low", "Volume"))
 
@@ -32,6 +32,7 @@ def crypto_tracker(symbol_crypto,crypto_option):
     if st.sidebar.button("Search"):
         st.title(f"{crypto_option} Tracker")
 
+        #Calling form yahoo finance library the requested data
         data_crypto = yf.Ticker(symbol_crypto)
         crypto_hist = data_crypto.history(start=start_date, end=end_date, interval='1d')
         crypto_hist.index =crypto_hist.index.map(lambda t: t.strftime('%Y-%m-%d'))
@@ -40,7 +41,8 @@ def crypto_tracker(symbol_crypto,crypto_option):
         if crypto_hist.empty == True:
             crypto_hist = pd.read_csv('data/historical_yfinance/'+symbol_crypto+'.csv',index_col='Date')
             
-        
+
+        ########### Pirce Evolution chart Implementation #############
         st.subheader("Price Evolution")
 
         #Calculating max and min closing price (and its date)
@@ -66,7 +68,9 @@ def crypto_tracker(symbol_crypto,crypto_option):
         st.plotly_chart(fig)
 
 
+        ########### Candlestick chart Implementation #############
         st.subheader("Candlestick chart")
+
         #Calculating max and min differences between Closing and Opening prices
         crypto_hist['Difference'] = crypto_hist.Close - crypto_hist.Open
         max_dif_price = crypto_hist['Difference'].max()
@@ -92,9 +96,9 @@ def crypto_tracker(symbol_crypto,crypto_option):
         st.plotly_chart(fig)
 
    
+        ########### Daily Cahnges Graphs Implementation #############
 
-
-        #Calculating and ploting Daili Cahnge (% comparing previous day)
+        #Calculating and ploting Daily Cahnge (% comparing previous day)
         st.subheader("Daily Change (%)")
         crypto_hist["Daily Change"] = crypto_hist["Close"].pct_change() * 100
         max_daily_change = crypto_hist["Daily Change"].max()
@@ -117,6 +121,7 @@ def crypto_tracker(symbol_crypto,crypto_option):
         labels={"x": "Date"})
         st.plotly_chart(fig)
 
+        ########### Cryptos Description Implementation #############
         description = list(crypto_descriptions[crypto_descriptions['Name']==crypto_option]['Description'])[0]
         st.subheader("Description")
         st.markdown(description)
