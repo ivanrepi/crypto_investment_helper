@@ -31,7 +31,7 @@ crypto_mapping = {"Bitcoin": "BTC-USD",
 
 #This function will save all historical data from crypto beggining to current uploaded day
 def save_historical_data(symbol_crypto):
-    historical_data_path = '../data/historical_yfinance/'+ symbol_crypto + '.csv'
+    historical_data_path = 'data/historical_yfinance/'+ symbol_crypto + '.csv'
     return df.to_csv(historical_data_path)
 
 #This function calculates and save prophet prediction as well as its model
@@ -45,8 +45,8 @@ def save_prophet(symbol_crypto):
 
     #Save the model 
 
-    prediction_file_path = '../data/predictions/forecast_'+ symbol_crypto + '.csv'
-    model_file_path = '../data/models/serialized_model_'+ symbol_crypto + '.json'
+    prediction_file_path = 'data/predictions/forecast_'+ symbol_crypto + '.csv'
+    model_file_path = 'data/models/serialized_model_'+ symbol_crypto + '.json'
     with open(model_file_path, 'w') as fout:
         json.dump(model_to_json(model), fout) 
 
@@ -93,8 +93,8 @@ def save_neural_network(symbol_crypto):
     model.fit(x_train, y_train, epochs=25, batch_size=32)
 
     #Save Scaler and Model
-    scaler_filename = "../data/scalers_neural_network/" + symbol_crypto + "_scaler.save"
-    model_filename = "../data/models/" + symbol_crypto + "_keras.h5"
+    scaler_filename = "data/scalers_neural_network/" + symbol_crypto + "_scaler.save"
+    model_filename = "data/models/" + symbol_crypto + "_keras.h5"
 
     joblib.dump(scaler, scaler_filename) 
     model.save(model_filename)

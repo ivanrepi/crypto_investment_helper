@@ -3,13 +3,26 @@ import sys
 from streamlit import cli as stcli
 import pandas as pd
 
-import crypto_tracker as ct
-import crypto_predictor as cp
-import buy_sell_helper as bsh
+from scripts import crypto_tracker as ct
+from scripts import crypto_predictor as cp
+from scripts import buy_sell_helper as bsh
 
 
 
 def main():
+    def set_bg_hack_url():
+            
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background: url("https://wallpaperaccess.com/full/1205123.jpg");
+                background-size: cover
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
     st.set_page_config(
         page_title="CryptoAnalysis",
@@ -21,6 +34,7 @@ def main():
             "About": "# This app serves is an MVP for interactive dashboards that can be used for financial data analysis",
         },
     )
+    set_bg_hack_url()
 
     st.title("Cryptocurrencies Investment Helper")
     

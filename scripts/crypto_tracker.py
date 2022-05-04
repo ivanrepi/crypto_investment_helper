@@ -17,7 +17,7 @@ sys.path.insert(0,os.getenv('path'))
 
 def crypto_tracker(symbol_crypto,crypto_option):
 
-    crypto_descriptions = pd.read_csv('../data/crypto_descriptions.csv')
+    crypto_descriptions = pd.read_csv('data/crypto_descriptions.csv')
 
 
     start_date = st.sidebar.date_input("From", date.today() - relativedelta(months=1))
@@ -38,7 +38,7 @@ def crypto_tracker(symbol_crypto,crypto_option):
 
         #If there is no connection to Internet, then read historical cryptocurrency csv file
         if crypto_hist.empty == True:
-            crypto_hist = pd.read_csv('../data/historical_yfinance/'+symbol_crypto+'.csv',index_col='Date')
+            crypto_hist = pd.read_csv('data/historical_yfinance/'+symbol_crypto+'.csv',index_col='Date')
             
         
         st.subheader("Price Evolution")
