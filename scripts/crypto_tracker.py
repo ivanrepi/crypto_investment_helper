@@ -36,12 +36,6 @@ def crypto_tracker(symbol_crypto,crypto_option):
     if st.sidebar.button("Search"):
         st.title(f"{crypto_option} Tracker")
 
-        conn = sqlite3.connect('data/historical_prices.db')
-        c = conn.cursor()
-        test = pd.read_sql('SELECT * FROM '+ (crypto_option.replace(" ", "")), conn)
-        st.markdown(test)
-
-
         #Calling form yahoo finance library the requested data
         data_crypto = yf.Ticker(symbol_crypto)
         crypto_hist = data_crypto.history(start=start_date, end=end_date, interval='1d')

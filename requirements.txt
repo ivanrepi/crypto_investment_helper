@@ -14,3 +14,4 @@ keras==2.8.0
 Keras-Preprocessing==1.1.2
 joblib==1.1.0
 python-dotenv==0.19.2
+qlite3
