@@ -14,6 +14,10 @@ load_dotenv()
 import sys
 sys.path.insert(0,os.getenv('path'))
 
+#SQLite to call historical db in case there is not internet connection
+import sqlite3
+
+
 
 def crypto_tracker(symbol_crypto,crypto_option):
 
@@ -32,16 +36,24 @@ def crypto_tracker(symbol_crypto,crypto_option):
     if st.sidebar.button("Search"):
         st.title(f"{crypto_option} Tracker")
 
+        conn = sqlite3.connect('data/historical_prices.db')
+        c = conn.cursor()
+        test = pd.read_sql('SELECT * FROM '+ (crypto_option.replace(" ", "")), conn)
+        st.markdown(test)
+
+
         #Calling form yahoo finance library the requested data
         data_crypto = yf.Ticker(symbol_crypto)
         crypto_hist = data_crypto.history(start=start_date, end=end_date, interval='1d')
         crypto_hist.index =crypto_hist.index.map(lambda t: t.strftime('%Y-%m-%d'))
 
-        #If there is no connection to Internet, then read historical cryptocurrency csv file
+        #If there is no connection to Internet, then read historical_prices database for that crypto
         if crypto_hist.empty == True:
-            crypto_hist = pd.read_csv('data/historical_yfinance/'+symbol_crypto+'.csv',index_col='Date')
+            conn = sqlite3.connect('data/historical_prices.db')
+            c = conn.cursor()
+            crypto_hist = pd.read_sql('SELECT * FROM '+ (crypto_option.replace(" ", "")), conn)
+            crypto_hist = crypto_hist.set_index('Date')
             
-
         ########### Pirce Evolution chart Implementation #############
         st.subheader("Price Evolution")
 

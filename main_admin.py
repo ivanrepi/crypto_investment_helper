@@ -12,6 +12,8 @@ from keras.models import load_model
 
 import joblib
 
+import sqlite3
+
 
 crypto_mapping = {"Bitcoin": "BTC-USD", 
                 "Ethereum": "ETH-USD", 
@@ -30,16 +32,25 @@ crypto_mapping = {"Bitcoin": "BTC-USD",
                 "Wrapped Bitcoin": "WBTC-USD"}
 
 #This function will save all historical data from crypto beggining to current uploaded day
-def save_historical_data(symbol_crypto):
-    historical_data_path = 'data/historical_yfinance/'+ symbol_crypto + '.csv'
-    return df.to_csv(historical_data_path)
+def save_historical_data(df, symbol_crypto, i):
+
+    conn = sqlite3.connect('data/historical_prices.db')
+    c = conn.cursor()
+    name = i.replace(" ", "")
+
+    df_sql = df
+    df_sql = df_sql.rename(columns = {'Adj Close':'Adj_Close'}, inplace = False)
+    c.execute('CREATE TABLE IF NOT EXISTS '+ name +' (Date, Open, High, Low, Close, Adj_Close, Volume )')
+    df_sql.to_sql(name, conn, if_exists='append', index = False)
+
+    return 'Ok'
 
 #This function calculates and save prophet prediction as well as its model
-def save_prophet(symbol_crypto):
+def save_prophet(df1, symbol_crypto):
     prediction_days = 365
-    df[['ds','y']] = df [['Date', 'Adj Close']]
+    df1[['ds','y']] = df1 [['Date', 'Adj Close']]
     model = Prophet()
-    model.fit(df)
+    model.fit(df1)
     future = model.make_future_dataframe(prediction_days, freq='d')
     forecast = model.predict(future)
 
@@ -58,17 +69,17 @@ def save_prophet(symbol_crypto):
 
 prediction_days = 60 #Number of past days to take into account to calculate the prediction
 
-def save_neural_network(symbol_crypto):
+def save_neural_network(df2, symbol_crypto):
 
 
-    df = yf.download(symbol_crypto, start='2010-01-01',
+    df2 = yf.download(symbol_crypto, start='2010-01-01',
                     end=date.today())
-    df = df.reset_index()
-    df['Date'] = pd.to_datetime(df['Date'])
+    df2 = df2.reset_index()
+    df2['Date'] = pd.to_datetime(df2['Date'])
 
 
     scaler = MinMaxScaler(feature_range=(0,1))
-    scaled_data = scaler.fit_transform(df['Close'].values.reshape(-1,1))
+    scaled_data = scaler.fit_transform(df2['Close'].values.reshape(-1,1))
 
 
     x_train, y_train = [], []
@@ -107,11 +118,12 @@ for i in crypto_mapping:
     print (crypto_mapping[i])
     symbol_crypto = crypto_mapping[i]
 
-    df = yf.download(symbol_crypto, start='2010-01-01',
+    data = yf.download(symbol_crypto, start='2010-01-01',
                 end=date.today())
-    df = df.reset_index()
-    df['Date'] = pd.to_datetime(df['Date'])
+    data = data.reset_index()
+    data['Date'] = pd.to_datetime(data['Date'])
 
-    save_historical_data(symbol_crypto)
-    save_prophet(symbol_crypto)
-    save_neural_network(symbol_crypto)
+    save_historical_data(data, symbol_crypto, i)
+    save_prophet(data, symbol_crypto)
+    save_neural_network(data, symbol_crypto)
+
