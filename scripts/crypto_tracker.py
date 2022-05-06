@@ -119,7 +119,7 @@ def crypto_tracker(symbol_crypto,crypto_option):
             st.markdown(f"Observed on {max_change_date}")
         with second_kpi_first_kpi_change:
             st.markdown(f"**Lowest Daily Change for {crypto_option}:**")
-            st.markdown(f"<h2 style='text-align: left; color: red;'>{round(min_daily_change,2)} USD</h2>", unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align: left; color: red;'>{round(min_daily_change,2)} %</h2>", unsafe_allow_html=True)
             st.markdown(f"Observed on {min_change_date}")
 
         fig = px.line(crypto_hist, 
