@@ -1,6 +1,6 @@
 # Cryptocurrencies Investment Helper
 
-This project is an MVP tool to allow's someone interested in Cryptocurrencies, to know more about them as well as an Investment Helper tool.
+This project is a MVP tool to allow's someone interested in Cryptocurrencies, to know more about them as well as an Investment Helper tool.
 
 ![Image](https://wortev.capital/wp-content/uploads/2021/07/principales-paises-que-mas-invierten-en-criptomonedas.jpg)
 
@@ -105,8 +105,8 @@ During the project, next skills have been worked:
 
 - Be sure next Python modules are installed: [sys](https://docs.python.org/3/library/sys.html) , [os](https://docs.python.org/3/library/os.html), [datetime](https://docs.python.org/3/library/datetime.html), [sqlite](https://docs.python.org/es/3/library/sqlite3.html).
 
-![Image](https://c.tenor.com/pPKOYQpTO8AAAAAd/monkey-developer.gif)
 
+<p align="center"><img src="https://c.tenor.com/pPKOYQpTO8AAAAAd/monkey-developer.gif"></p>
 
 &nbsp;
 
@@ -121,8 +121,15 @@ The admin role will be in charge of execute the main_admin.py script, which will
 - Reports errors in case they exist.
 
 # :point_right: **USER Script**
+The user app is divided in 3 sections, in order to help the user to understand, predict and help in the Cryptocurrencies trade.
 
+## :chart_with_upwards_trend: **Cryptocurrencies Analysis**
+The main function of this first part of the main app (script) is understand the top 15 cryptocurrencies in the market.
+Selecting which crypto do the user want to visualize, as well as the data period he/she wish to consult, the user will be able to see:
+- Evolution of stock prices in that period (Close, Open, Low, High or Market Volume)
+- 
 
+![](crypto_tracker.mov)
 
 
 
@@ -173,9 +180,9 @@ The admin role will be in charge of execute the main_admin.py script, which will
 
 &nbsp;
 ### :shit: **ToDo**
-:black_square_button: Add some other Cryptocurrencies
-:black_square_button: Add news sentiment analysis to price predictions
-:black_square_button: Add more email functionalities and alerts
-:black_square_button: Automatize buy and sell actions
+:black_square_button: Add some other Cryptocurrencies.
+:black_square_button: Add news sentiment analysis to price predictions.
+:black_square_button: Add more email functionalities and alerts.
+:black_square_button: Automatize buy and sell actions.
 
 ---
