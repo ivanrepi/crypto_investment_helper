@@ -139,8 +139,26 @@ https://user-images.githubusercontent.com/83816010/167087792-d71b8d6a-b8cb-45ad-
 
 
 
+### :fast_forward: **Cryptocurrencies Price Predictor**
+In this second part, the user will:
+- Check the Short-Term (Tomorrow's) and Long-Term Stock Price Prediction for the selected Cryptocurrency.
+- Make their own prediction, selecting the data date range to calculate the prediction, as well as the desired predicted days.
+
+https://user-images.githubusercontent.com/83816010/167089603-63e93d7e-b859-44fe-b4e1-72c6efd8318c.mov
 
 
+
+https://user-images.githubusercontent.com/83816010/167089641-ab9a6075-5d2a-4064-8c80-763e10dbb095.mov
+
+
+
+
+https://user-images.githubusercontent.com/83816010/167089685-3a76082b-f902-42de-8f8c-fa1a88b6f0cd.mov
+
+
+
+
+https://user-images.githubusercontent.com/83816010/167089733-d7e2f4c5-9d67-4209-b20d-53d3a170eafe.mov
 
 
 
