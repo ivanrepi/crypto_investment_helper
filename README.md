@@ -127,9 +127,15 @@ The user app is divided in 3 sections, in order to help the user to understand, 
 The main function of this first part of the main app (script) is understand the top 15 cryptocurrencies in the market.
 Selecting which crypto do the user want to visualize, as well as the data period he/she wish to consult, the user will be able to see:
 - Evolution of stock prices in that period (Close, Open, Low, High or Market Volume)
-- 
+- Candlestick chart with the market values in that period.
+- Daily Stock Prices Change(%).
+- Main KPIs with the highest and lowest values in that period.
 
-![](crypto_tracker.mov)
+
+https://user-images.githubusercontent.com/83816010/167087677-1b10a75b-26c8-4410-844d-e7fe0ad23737.mov
+
+
+https://user-images.githubusercontent.com/83816010/167087792-d71b8d6a-b8cb-45ad-bf53-8b2cf2ee5708.mov
 
 
 
