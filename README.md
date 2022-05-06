@@ -106,7 +106,7 @@ During the project, next skills have been worked:
 - Be sure next Python modules are installed: [sys](https://docs.python.org/3/library/sys.html) , [os](https://docs.python.org/3/library/os.html), [datetime](https://docs.python.org/3/library/datetime.html), [sqlite](https://docs.python.org/es/3/library/sqlite3.html).
 
 
-<p align="center"><img src="https://c.tenor.com/pPKOYQpTO8AAAAAd/monkey-developer.gif"></p>
+<p align="center"><img src="![image](https://user-images.githubusercontent.com/83816010/167094646-5a8e0ac5-32d4-4fd5-9528-ae4db17488da.png)"></p>
 
 &nbsp;
 
@@ -139,7 +139,7 @@ https://user-images.githubusercontent.com/83816010/167087792-d71b8d6a-b8cb-45ad-
 
 
 
-### :fast_forward: **Cryptocurrencies Price Predictor**
+## :fast_forward: **Cryptocurrencies Price Predictor**
 In this second part, the user will:
 - Check the Short-Term (Tomorrow's) and Long-Term Stock Price Prediction for the selected Cryptocurrency.
 - Make their own prediction, selecting the data date range to calculate the prediction, as well as the desired predicted days.
@@ -159,6 +159,22 @@ https://user-images.githubusercontent.com/83816010/167089685-3a76082b-f902-42de-
 
 
 https://user-images.githubusercontent.com/83816010/167089733-d7e2f4c5-9d67-4209-b20d-53d3a170eafe.mov
+
+
+
+## :moneybag: **Buy & Sell**
+
+In this latest section, user will be able to:
+- Check daily evolution of selected Cryptocurrency daily stock prices
+- Check the chart with buy and sell signals.
+- Know if today he/she should buy or sell cryptos stock.
+- Konw positive, negative and neutral of today's news.
+- Check the latest news of the selected cryptocurrency.
+
+https://user-images.githubusercontent.com/83816010/167093846-22f0290d-472f-4f44-be0c-7669094bc338.mov
+
+
+https://user-images.githubusercontent.com/83816010/167093879-a1d610fd-0d8d-4fdc-8781-7bb44437c0b6.mov
 
 
 
