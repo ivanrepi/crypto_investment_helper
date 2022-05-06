@@ -10,25 +10,25 @@ This project is a MVP tool to allow's someone interested in Cryptocurrencies, to
 The app contains 2 types of user, the admin one and the final user one.
 
 - The **administrator** role  will be in charge of updating the information for the user, as well as carry out the 'Long-Term' Stock Prediction once a week.
-- The **final user** role will be able to chose, if he/she wants to get a Cryptocurrency general Analysis, a Prediction for short and long-term, and/or Daily information for Investment proposals.
+- The **final user** role will be able to chose, if he/she wants to get a Cryptocurrency Analysis, a Stock Price Prediction for short and long-term, and/or Daily information for Investment proposals.
 
 
 ## **Getting Started**
 ### :baby: **Status**
-This is the final project of Ironhack Data Analytics Bootcamp. The main goal is to build a complete pipeline app.
+This is the final project of the Ironhack Data Analytics Bootcamp. The main goal is to build a complete pipeline app.
 
 ### :computer: **Skills**
 During the project, next skills have been worked:
- - **Python**: All scripts have been developed in Python, from data extraction to data visualization
- - **SQL**: A databse have been created to store the cryptos daily main values. Then they are read by the main app.
+ - **Python**: All scripts have been developed in Python, from data extraction to data visualization.
+ - **SQL**: A database have been created to store the cryptos daily main values. Then they are read by the main app.
  - **Web Scrapping**: To get daily cryptos values, daily news, etc.
- - **Data Cleanning**: To clean and prepare all data before preparing them for the user
+ - **Data Cleanning**: To clean and prepare all data before preparing them for the user.
  - **Statistic**: To understand the main cryptocurrencies in the market, the prices evolution, the market volatility, etc.
- - **Supervised Machine Learning**: To carrry out the Long-Term Stock Price Prediction
- - **Unsupervised Machine Learning**: To carrry out the Short-Term Stock Price Prediction
- - **Sentiment-Analysis**: To identify the positive, negative and neutral daily news
- - **Mail Functionality**: To send an email in case of Buy/Sell market signals
- - **Visualization**: To show in an easy-way the main KPIs and prices evolution, predictions and news to the user
+ - **Supervised Machine Learning**: To carrry out the Long-Term Stock Price Prediction.
+ - **Unsupervised Machine Learning**: To carrry out the Short-Term Stock Price Prediction.
+ - **Sentiment-Analysis**: To identify the positive, negative and neutral daily news.
+ - **Mail Functionality**: To send an email in case of Buy/Sell market signals.
+ - **Visualization**: To show in an easy-way the main KPIs and prices evolution, predictions and news to the user.
 
 ### :page_facing_up: **Data Avilability**
  - Daily and historical market values are obtained from [yahoo finance](https://finance.yahoo.com/).
@@ -38,7 +38,7 @@ During the project, next skills have been worked:
 
 - This repository is tested on **Python 3.7+**.
 - Create a virtual environment with the version of Python you're going to use and activate it.
-- Check requirements.txt file to install the tested versions
+- Check requirements.txt file to install the tested versions.
 
 - Install [pandas](https://pandas.pydata.org/docs/user_guide/index.html) library. Copy and paste next command in your master branch:
     ```
@@ -106,8 +106,6 @@ During the project, next skills have been worked:
 - Be sure next Python modules are installed: [sys](https://docs.python.org/3/library/sys.html) , [os](https://docs.python.org/3/library/os.html), [datetime](https://docs.python.org/3/library/datetime.html), [sqlite](https://docs.python.org/es/3/library/sqlite3.html).
 
 
-<p align="center"><img src="![image](https://user-images.githubusercontent.com/83816010/167094646-5a8e0ac5-32d4-4fd5-9528-ae4db17488da.png)"></p>
-
 &nbsp;
 
 ---
@@ -124,9 +122,9 @@ The admin role will be in charge of execute the main_admin.py script, which will
 The user app is divided in 3 sections, in order to help the user to understand, predict and help in the Cryptocurrencies trade.
 
 ## :chart_with_upwards_trend: **Cryptocurrencies Analysis**
-The main function of this first part of the main app (script) is understand the top 15 cryptocurrencies in the market.
-Selecting which crypto do the user want to visualize, as well as the data period he/she wish to consult, the user will be able to see:
-- Evolution of stock prices in that period (Close, Open, Low, High or Market Volume)
+The main function of this first part of the main app (script) is understand the Top 15 cryptocurrencies in the market.
+Selecting which crypto the user want to visualize, as well as the data period he/she wish to consult, the user will be able to see:
+- Evolution of stock prices in that period (Close, Open, Low, High or Market Volume).
 - Candlestick chart with the market values in that period.
 - Daily Stock Prices Change(%).
 - Main KPIs with the highest and lowest values in that period.
@@ -164,8 +162,8 @@ https://user-images.githubusercontent.com/83816010/167089733-d7e2f4c5-9d67-4209-
 
 ## :moneybag: **Buy & Sell**
 
-In this latest section, user will be able to:
-- Check daily evolution of selected Cryptocurrency daily stock prices
+In this latest section, the user will be able to:
+- Check daily evolution of selected Cryptocurrency daily stock prices.
 - Check the chart with buy and sell signals.
 - Know if today he/she should buy or sell cryptos stock.
 - Konw positive, negative and neutral of today's news.
@@ -221,8 +219,11 @@ https://user-images.githubusercontent.com/83816010/167093879-a1d610fd-0d8d-4fdc-
 &nbsp;
 ### :shit: **ToDo**
 :black_square_button: Add some other Cryptocurrencies.
+
 :black_square_button: Add news sentiment analysis to price predictions.
+
 :black_square_button: Add more email functionalities and alerts.
+
 :black_square_button: Automatize buy and sell actions.
 
 ---
